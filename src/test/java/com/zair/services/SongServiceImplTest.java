@@ -20,13 +20,13 @@ import java.util.Collections;
 public class SongServiceImplTest {
 
     @Mock
-    private SongRepository songRepository;
+    private SongRepository songRepositoryMock;
 
     @Mock
-    private AlbumRepository albumRepository;
+    private AlbumRepository albumRepositoryMock;
 
     @Mock
-    private SongMapper songMapper;
+    private SongMapper songMapperMock;
 
     @InjectMocks
     private SongServiceImpl songService;
@@ -34,61 +34,61 @@ public class SongServiceImplTest {
     @Test
     public void testFindAll() {
         // Arrange
-        when(songRepository.findAll()).thenReturn(Collections.emptyList());
-        when(songMapper.toDTOsList(Collections.emptyList())).thenReturn(Collections.emptyList());
+        when(songRepositoryMock.findAll()).thenReturn(Collections.emptyList());
+        when(songMapperMock.toDTOsList(Collections.emptyList())).thenReturn(Collections.emptyList());
 
         // Act
         songService.findAll();
 
         // Assert
-        verify(songRepository, times(1)).findAll();
-        verify(songMapper, times(1)).toDTOsList(Collections.emptyList());
+        verify(songRepositoryMock, times(1)).findAll();
+        verify(songMapperMock, times(1)).toDTOsList(Collections.emptyList());
     }
 
     @Test
     void testFindAllByName() {
         // Arrange
         String name = "Test Song";
-        when(songRepository.findAllByNameContainingIgnoreCase(name)).thenReturn(Collections.emptyList());
-        when(songMapper.toDTOsList(Collections.emptyList())).thenReturn(Collections.emptyList());
+        when(songRepositoryMock.findAllByNameContainingIgnoreCase(name)).thenReturn(Collections.emptyList());
+        when(songMapperMock.toDTOsList(Collections.emptyList())).thenReturn(Collections.emptyList());
 
         // Act
         songService.findAllByName(name);
 
         // Assert
-        verify(songRepository, times(1)).findAllByNameContainingIgnoreCase(name);
-        verify(songMapper, times(1)).toDTOsList(Collections.emptyList());
+        verify(songRepositoryMock, times(1)).findAllByNameContainingIgnoreCase(name);
+        verify(songMapperMock, times(1)).toDTOsList(Collections.emptyList());
     }
 
     @Test
     void testFindAllByAlbumId() {
         // Arrange
         Long albumId = 1L;
-        when(albumRepository.existsById(albumId)).thenReturn(true);
-        when(songRepository.findAllByAlbum_Id(albumId)).thenReturn(Collections.emptyList());
-        when(songMapper.toDTOsList(Collections.emptyList())).thenReturn(Collections.emptyList());
+        when(albumRepositoryMock.existsById(albumId)).thenReturn(true);
+        when(songRepositoryMock.findAllByAlbum_Id(albumId)).thenReturn(Collections.emptyList());
+        when(songMapperMock.toDTOsList(Collections.emptyList())).thenReturn(Collections.emptyList());
 
         // Act
         songService.findAllByAlbumId(albumId);
 
         // Assert
-        verify(albumRepository, times(1)).existsById(albumId);
-        verify(songRepository, times(1)).findAllByAlbum_Id(albumId);
-        verify(songMapper, times(1)).toDTOsList(Collections.emptyList());
+        verify(albumRepositoryMock, times(1)).existsById(albumId);
+        verify(songRepositoryMock, times(1)).findAllByAlbum_Id(albumId);
+        verify(songMapperMock, times(1)).toDTOsList(Collections.emptyList());
     }
 
     @Test
     void testFindAllByAlbumId_InvalidAlbumId() {
         // Arrange
         Long invalidAlbumId = 999L;
-        when(albumRepository.existsById(invalidAlbumId)).thenReturn(false);
+        when(albumRepositoryMock.existsById(invalidAlbumId)).thenReturn(false);
 
         // Act & Assert
         assertThrows(InvalidAlbumIdException.class, () -> songService.findAllByAlbumId(invalidAlbumId));
 
         // Verify
-        verify(albumRepository, times(1)).existsById(invalidAlbumId);
-        verify(songRepository, never()).findAllByAlbum_Id(anyLong());
-        verify(songMapper, never()).toDTOsList(any());
+        verify(albumRepositoryMock, times(1)).existsById(invalidAlbumId);
+        verify(songRepositoryMock, never()).findAllByAlbum_Id(anyLong());
+        verify(songMapperMock, never()).toDTOsList(any());
     }
 }
