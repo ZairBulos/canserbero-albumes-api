@@ -8,6 +8,7 @@ import com.zair.repositories.AlbumRepository;
 import com.zair.repositories.SongRepository;
 import com.zair.services.SongService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-// TODO: Implement logging SLF4J
+@Slf4j
 public class SongServiceImpl implements SongService {
 
     private final SongRepository songRepository;
@@ -30,7 +31,7 @@ public class SongServiceImpl implements SongService {
             List<Song> songs = songRepository.findAll();
             return songMapper.toDTOsList(songs);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error("Failed to fetch all songs - {}", e.getMessage());
             throw new ServiceException("Failed to fetch all songs", e);
         }
     }
@@ -41,7 +42,7 @@ public class SongServiceImpl implements SongService {
             List<Song> songs = songRepository.findAllByNameContainingIgnoreCase(name);
             return songMapper.toDTOsList(songs);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error("Failed to fetch songs by name {} - {}", name, e.getMessage());
             throw new ServiceException("Failed to fetch songs by name: " + name, e);
         }
     }
@@ -56,10 +57,9 @@ public class SongServiceImpl implements SongService {
             List<Song> songs = songRepository.findAllByAlbum_Id(albumId);
             return songMapper.toDTOsList(songs);
         } catch (InvalidAlbumIdException e) {
-            System.out.println("Album not found with id: " + albumId);
             throw e;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error("Failed to fetch songs by album id {} - {}", albumId, e.getMessage());
             throw new ServiceException("Failed to fetch songs by album id: " + albumId, e);
         }
     }

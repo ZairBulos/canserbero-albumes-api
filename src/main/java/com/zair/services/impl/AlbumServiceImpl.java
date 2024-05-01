@@ -10,6 +10,7 @@ import com.zair.repositories.AlbumRepository;
 import com.zair.repositories.SongRepository;
 import com.zair.services.AlbumService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-// TODO: Implement logging SLF4J
+@Slf4j
 public class AlbumServiceImpl implements AlbumService {
 
     private final AlbumRepository albumRepository;
@@ -35,7 +36,7 @@ public class AlbumServiceImpl implements AlbumService {
             List<Album> albums = albumRepository.findAll();
             return albumMapper.toDTOsList(albums);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error("Failed to fetch all albums - {}", e.getMessage());
             throw new ServiceException("Failed to fetch all albums", e);
         }
     }
@@ -55,7 +56,7 @@ public class AlbumServiceImpl implements AlbumService {
 
             return albumMapper.toFullDTOsList(albums, albumSongs);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error("Failed to fetch all albums with songs - {}", e.getMessage());
             throw new ServiceException("Failed to fetch all albums with songs", e);
         }
     }
@@ -72,10 +73,9 @@ public class AlbumServiceImpl implements AlbumService {
             Album album = optional.get();
             return albumMapper.toDTO(album);
         } catch (AlbumNotFoundException e) {
-            System.out.println("Album not found with id: " + id);
             throw e;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error("Failed to fetch album by id {} - {}", id, e.getMessage());
             throw new ServiceException("Failed to fetch album by id: " + id, e);
         }
     }
@@ -93,10 +93,9 @@ public class AlbumServiceImpl implements AlbumService {
             List<Song> songs = songRepository.findAllByAlbum_Id(id);
             return albumMapper.toFullDTO(album, songs);
         } catch (AlbumNotFoundException e) {
-            System.out.println("Album not found with id: " + id);
             throw e;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error("Failed to fetch album with songs by id {} - {}", id, e.getMessage());
             throw new ServiceException("Failed to fetch album with songs by id: " + id, e);
         }
     }
