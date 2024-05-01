@@ -15,7 +15,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -43,7 +42,7 @@ public class AlbumMapperTest {
                 .id(1L)
                 .name("Album Name")
                 .cover("http://cover.jpg")
-                .releaseDate(LocalDate.now())
+                .releaseDate(2024)
                 .links(links)
                 .build();
 
@@ -52,7 +51,7 @@ public class AlbumMapperTest {
         assertEquals(1L, albumDTO.getId());
         assertEquals("Album Name", albumDTO.getNombre());
         assertEquals("http://cover.jpg", albumDTO.getPortada());
-        assertEquals(LocalDate.now(), albumDTO.getFechaPublicacion());
+        assertEquals(2024, albumDTO.getFechaPublicacion());
         assertEquals(1, albumDTO.getEnlaces().size());
     }
 

@@ -1,7 +1,6 @@
 package com.zair.controllers;
 
 import static org.mockito.Mockito.*;
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -18,10 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @WebMvcTest(controllers = AlbumController.class)
@@ -99,26 +95,5 @@ public class AlbumControllerTest {
 
         mockMvc.perform(get("/api/albumes/canciones/{id}", albumId))
                 .andExpect(status().isNotFound());
-    }
-
-    @Test
-    public void getById_ReturnsAlbumWithFormattedDate() throws Exception {
-        LocalDate currentDate = LocalDate.now();
-        String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy"));
-
-        Long albumId = 1L;
-        AlbumDTO albumDTO = AlbumDTO.builder()
-                .id(albumId)
-                .nombre("AlbumName")
-                .portada("CoverImage")
-                .fechaPublicacion(currentDate)
-                .enlaces(Collections.emptyList())
-                .build();
-
-        when(albumService.findById(albumId)).thenReturn(albumDTO);
-
-        mockMvc.perform(get("/api/albumes/{id}", albumId))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.fechaPublicacion", is(formattedDate)));
     }
 }

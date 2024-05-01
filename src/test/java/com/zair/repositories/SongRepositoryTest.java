@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class SongRepositoryTest {
     public void setUp() {
         // Given
         AlbumLink albumLink = AlbumLink.builder().url("https://applemusic.com/album").platform(Platform.APPLE_MUSIC).build();
-        album = Album.builder().name("Album").cover("https://cover.jpg").releaseDate(LocalDate.now()).links(Arrays.asList(albumLink)).build();
+        album = Album.builder().name("Album").cover("https://cover.jpg").releaseDate(2024).links(Arrays.asList(albumLink)).build();
         albumLink.setAlbum(album);
         albumRepository.save(album);
 

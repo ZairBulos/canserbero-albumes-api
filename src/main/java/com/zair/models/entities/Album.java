@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -25,9 +24,8 @@ public class Album implements Serializable {
     @Column(name = "cover", nullable = false)
     private String cover;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "release_date", nullable = false)
-    private LocalDate releaseDate;
+    private Integer releaseDate;
 
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
