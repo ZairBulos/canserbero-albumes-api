@@ -12,6 +12,7 @@ import com.zair.services.AlbumService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.service.spi.ServiceException;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,7 @@ public class AlbumServiceImpl implements AlbumService {
     private final AlbumMapper albumMapper;
 
     @Override
+    @Cacheable("albums")
     public List<AlbumDTO> findAll() {
         try {
             List<Album> albums = albumRepository.findAll();
@@ -42,6 +44,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    @Cacheable("albumsFull")
     public List<AlbumFullDTO> findAllFull() {
         try {
             List<Album> albums = albumRepository.findAll();
@@ -62,6 +65,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    @Cacheable(value = "album", key = "#id", unless = "#result == null")
     public AlbumDTO findById(Long id) {
         try {
             Optional<Album> optional = albumRepository.findById(id);
@@ -81,6 +85,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    @Cacheable(value = "albumFull", key = "#id", unless = "#result == null")
     public AlbumFullDTO findFullById(Long id) {
         try {
             Optional<Album> optional = albumRepository.findById(id);

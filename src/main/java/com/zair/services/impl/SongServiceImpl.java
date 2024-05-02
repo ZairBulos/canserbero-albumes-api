@@ -10,6 +10,7 @@ import com.zair.services.SongService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.service.spi.ServiceException;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,7 @@ public class SongServiceImpl implements SongService {
     private final SongMapper songMapper;
 
     @Override
+    @Cacheable("songs")
     public List<SongDTO> findAll() {
         try {
             List<Song> songs = songRepository.findAll();
@@ -37,6 +39,7 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
+    @Cacheable(value = "songsByName", key = "#name", unless = "#result.isEmpty()")
     public List<SongDTO> findAllByName(String name) {
         try {
             List<Song> songs = songRepository.findAllByNameContainingIgnoreCase(name);
@@ -48,6 +51,7 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
+    @Cacheable(value = "songsByAlbum", key = "#albumId", unless = "#result.isEmpty()")
     public List<SongDTO> findAllByAlbumId(Long albumId) {
         try {
             if (!albumRepository.existsById(albumId)) {
