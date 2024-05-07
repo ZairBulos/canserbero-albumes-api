@@ -29,7 +29,7 @@ public class AlbumController {
     @GetMapping("")
     @Operation(
             summary = "Obtener todos los álbumes",
-            description = "Obtiene una lista de todos los álbumes"
+            description = "Devuelve todos los álbumes disponibles"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),
@@ -44,8 +44,8 @@ public class AlbumController {
 
     @GetMapping("/canciones")
     @Operation(
-            summary = "Obtener álbumes con canciones",
-            description = "Obtiene una lista de álbumes con todas sus canciones"
+            summary = "Obtener todos los álbumes con canciones",
+            description = "Devuelve todos los álbumes con sus respectivas canciones"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),
@@ -60,8 +60,8 @@ public class AlbumController {
 
     @GetMapping("/{id}")
     @Operation(
-            summary = "Obtener álbum por ID",
-            description = "Obtiene un álbum específico por su ID"
+            summary = "Obtener álbum por id",
+            description = "Devuelve un álbum específico por su ID"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),
@@ -79,8 +79,8 @@ public class AlbumController {
 
     @GetMapping("/canciones/{id}")
     @Operation(
-            summary = "Obtener álbum con todas las canciones por ID",
-            description = "Obtiene un álbum específico con todas sus canciones por su ID"
+            summary = "Obtener álbum con canciones por id",
+            description = "Devuelve un álbum específico con todas sus canciones por su ID"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),

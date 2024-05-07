@@ -25,7 +25,7 @@ public class SongController {
     @GetMapping("")
     @Operation(
             summary = "Obtener todas las canciones",
-            description = "Obtiene una lista de todas las canciones"
+            description = "Devuelve todas las canciones disponibles"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),
@@ -41,7 +41,7 @@ public class SongController {
     @GetMapping("/{album}")
     @Operation(
             summary = "Obtener canciones por álbum",
-            description = "Obtiene una lista de canciones de un álbum específico"
+            description = "Devuelve las canciones de un álbum específico"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),
@@ -60,7 +60,7 @@ public class SongController {
     @GetMapping("/buscarPorNombre")
     @Operation(
             summary = "Buscar canciones por nombre",
-            description = "Obtiene una lista de canciones que coinciden con el nombre proporcionado"
+            description = "Busca canciones por nombre"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),
