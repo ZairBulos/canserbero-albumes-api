@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.zair</groupId>
     <artifactId>canserbero-albumes-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>canserbero-albumes-api</name>
     <description>API RESTful para consultar los álbumes y canciones del artista Canserbero</description>
     <properties>
