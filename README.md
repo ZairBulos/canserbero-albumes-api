@@ -5,7 +5,7 @@
     title="Tirone José González Orama, Canserbero"
   />
 
-# Cansebero Álbumes API
+# Canserbero Álbumes API
 
 API RESTful para consultar los álbumes y canciones del rapero, compositor y activista venezolano Tirone José González Orama, conocido artísticamente como Canserbero.
 
